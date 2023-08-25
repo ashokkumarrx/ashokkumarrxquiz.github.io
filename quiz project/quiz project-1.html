@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+            
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="style.css">
+            
+            </head>
+            
+            <body>
+                <div class="panel">
+                    <h1 style="text-align: center; color: red;">Quiz Application Using JavaScript</h1>
+                    <hr>
+                    <div style="font-size: large; color: black;"  class="question" id="ques"></div>
+                    <div style=" color: black;" class="options" id="opt"></div>
+                    <hr>
+                    <div style="text-align: center; color: royalblue;"><button onclick="checkAns()" id="btn" style="text-align: center;">SUBMIT</button></div>
+                    <div style="font-size :large; text-align: center; color: red;" id="score"></div>
+                    <link rel="stylesheet" href="quiz style css.css">
+                    <script>
+            const Questions = [{
+                q: "1)Rabbit has how many legs?",
+                a: [{ text: "two", isCorrect: false },
+                { text: "three", isCorrect: false },
+                { text: "four", isCorrect: true },
+                { text: "five", isCorrect: false }
+                ]
+            
+            },
+            {
+                q: "2)What is the capital of Tamilnadu?",
+                a: [{ text: "madurai", isCorrect: false, isSelected: false },
+                { text: "coimbatore", isCorrect: false },
+                { text: "thirunelveli", isCorrect: false },
+                { text: "Chennai", isCorrect: true }
+                ]
+            
+            },
+            {
+                q: "3)who is the cheif minister of tamilnadu?",
+                a: [{ text: "EPS", isCorrect: false },
+                { text: "Karunanidhi", isCorrect: false },
+                { text: "Mukastalin", isCorrect: true },
+                { text: "Udhayanidhi", isCorrect: false }
+                ]
+            
+            },
+            {
+                q: "4)which tool is used to write?",
+                a: [{ text: "pen", isCorrect: true },
+                { text: "hand", isCorrect: false },
+                { text: "paper", isCorrect: false },
+                { text: "brush", isCorrect: false }
+                ]
+            
+            },
+            {
+                q: "5)water came from",
+                a: [{ text: "land", isCorrect: false },
+                { text: "tab", isCorrect: false },
+                { text: "clouds", isCorrect: true },
+                { text: "pipe", isCorrect: false }
+                ]
+            
+            },
+            
+            ]
+            
+            let currQuestion = 0
+            let score = 0
+            
+            function loadQues() {
+                const question = document.getElementById("ques")
+                const opt = document.getElementById("opt")
+            
+                question.textContent = Questions[currQuestion].q;
+                opt.innerHTML = ""
+            
+                for (let i = 0; i < Questions[currQuestion].a.length; i++) {
+                    const choicesdiv = document.createElement("div");
+                    const choice = document.createElement("input");
+                    const choiceLabel = document.createElement("label");
+            
+                    choice.type = "radio";
+                    choice.name = "answer";
+                    choice.value = i;
+            
+                    choiceLabel.textContent = Questions[currQuestion].a[i].text;
+            
+                    choicesdiv.appendChild(choice);
+                    choicesdiv.appendChild(choiceLabel);
+                    opt.appendChild(choicesdiv);
+                }
+            }
+            
+            loadQues();
+            
+            function loadScore() {
+                const totalScore = document.getElementById("score")
+                totalScore.textContent = `You scored ${score} out of ${Questions.length}`
+            }
+            
+            
+            function nextQuestion() {
+                if (currQuestion < Questions.length - 1) {
+                    currQuestion++;
+                    loadQues();
+                } else {
+                    document.getElementById("opt").remove()
+                    document.getElementById("ques").remove()
+                    document.getElementById("btn").remove()
+                    loadScore();
+                }
+            }
+            
+            function checkAns() {
+                const selectedAns = parseInt(document.querySelector('input[name="answer"]:checked').value);
+            
+                if (Questions[currQuestion].a[selectedAns].isCorrect) {
+                    score++;
+                    console.log("Correct")
+                    nextQuestion();
+                } else {
+                    nextQuestion();
+                }
+            }
+            </script>
+            </div>
+            
+            </body>
